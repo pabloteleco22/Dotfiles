@@ -1,0 +1,85 @@
+add_newline = false
+command_timeout = 2000
+
+[jobs]
+format = "[$symbol( $number) ]($style) "
+
+[sudo]
+style = "bold yellow"
+symbol = "  "
+format = "[$symbol]($style)"
+disabled = false
+
+[python]
+symbol = "  "
+
+[java]
+symbol = "  "
+style = "bright-red"
+
+[c]
+detect_extensions = ["c"]
+symbol = "󰙱 "
+
+[custom.cpp]
+detect_extensions = ["cpp"]
+symbol = "󰙲  "
+shell = ["bash"]
+command = "g++ --version | grep GCC | cut -d' ' -f 3"
+style = "blue"
+format = "via [$symbol(v($output)-g++) ]($style)"
+
+[custom.h]
+detect_extensions = ["h", "hpp"]
+symbol = "  "
+format = "via [$symbol]($style)"
+
+[custom.make]
+detect_files = ["makefile", "Makefile"]
+symbol = "  "
+shell = ["bash"]
+command = "make --version | head -1 | cut -d' ' -f3"
+style = "#EA00FF"
+format = "via [$symbol(make v($output)) ]($style)"
+
+[custom.html]
+detect_extensions = ["htm", "html"]
+symbol = "  "
+style = "yellow"
+format = "via [$symbol ]($style)"
+
+[custom.css]
+detect_extensions = ["css"]
+symbol = "  "
+style = "blue"
+format = "via [$symbol]($style)"
+
+[custom.json]
+detect_extensions = ["json"]
+symbol = "{json} "
+style = "bright-yellow"
+format = "@ [$symbol]($style)"
+
+[custom.toml]
+detect_extensions = ["toml"]
+symbol = "{toml} "
+style = "bright-yellow"
+format = "@ [$symbol]($style)"
+
+[php]
+symbol = "  "
+
+[nodejs]
+symbol = "  "
+
+[[battery.display]]
+threshold = 20
+
+[directory]
+truncation_length = 0
+
+[shell]
+disabled = false
+fish_indicator = "󰈺 "
+bash_indicator = ""
+#zsh_indicator = " "

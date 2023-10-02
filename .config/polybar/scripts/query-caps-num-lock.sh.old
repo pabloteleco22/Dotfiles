@@ -24,10 +24,6 @@ if test "$num" = "on"; then
 fi
 
 if test "$(xinput list-props $touchpad_id | grep -Eio "device enabled.*:\s*[01]" | awk -v FS=: '{print $2}' | xargs)" = "1"; then
-    if test "$return" = "$begin$caps_label"; then
-        return="$return%{O4}"
-    fi
-
     return="$return$touchpad_label"
 fi
 

@@ -123,10 +123,12 @@ font-3 = "Noto Sans:size=10"
 font-4 = "CaskaydiaCove Nerd Font:size=13"
 font-5 = "Noto Sans Mono:size=10"
 
-modules-left = i3 xwindow
+;modules-left = i3_custom xwindow i3-workspaces
+modules-left = i3-workspace xwindow
+;modules-left = i3 xwindow
 ;modules-center = kernel
-modules-center = 
-modules-right = cpu2 memory2 wireless-network vpn battery temperature2 backlight-acpi mic pulseaudio capsnumlock date2
+;modules-center = 
+modules-right = cpu2 memory2 wireless-network vpn battery temperature2 backlight-acpi mic-ipc pulseaudio capsnumlock-ipc date2
 
 separator = |
 
@@ -1623,7 +1625,6 @@ modules-right = filesystem
 ;tray-position = right
 ;tray-background = ${colors.background}
 
-
 ################################################################################
 ################################################################################
 ############                       MODULE I3                        ############
@@ -1688,7 +1689,7 @@ ws-icon-6 = 7;
 ws-icon-7 = 8;
 ws-icon-8 = 9;
 ws-icon-9 = 10;
-ws-icon-default = " "
+;ws-icon-default = " "
 
 ; Available tags:
 ;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
@@ -1730,6 +1731,136 @@ label-visible = %icon% %name%
 label-visible-background = ${self.label-focused-background}
 label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+; urgent = Workspace with urgency hint set
+label-urgent = %icon% %name%
+label-urgent-background = ${self.label-focused-background}
+label-urgent-foreground = #db104e
+label-urgent-padding = 2
+
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+################################################################################
+################################################################################
+############                    MODULE I3 CUSTOM                    ############
+################################################################################
+################################################################################
+
+[module/i3_custom]
+;https://github.com/jaagr/polybar/wiki/Module:-i3
+type = internal/i3_custom
+
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
+pin-workspaces = true
+
+; This will split the workspace name on ':'
+; Default: false
+strip-wsnumbers = false
+
+; Sort the workspaces by index instead of the default
+; sorting that groups the workspaces by output
+; Default: false
+index-sort = false
+
+; Create click handler used to focus workspace
+; Default: true
+enable-click = true
+
+; Create scroll handlers used to cycle workspaces
+; Default: true
+enable-scroll = true
+
+; Wrap around when reaching the first/last workspace
+; Default: true
+wrapping-scroll = false
+
+; Set the scroll cycle direction
+; Default: true
+reverse-scroll = false
+
+; Use fuzzy (partial) matching on labels when assigning
+; icons to workspaces
+; Example: code;♚ will apply the icon to all workspaces
+; containing 'code' in the label
+; Default: false
+fuzzy-match = false
+
+show-explicit-workspaces = true
+
+;extra icons to choose from
+;http://fontawesome.io/cheatsheet/
+;       v     
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;
+;ws-icon-default = " "
+
+; Available tags:
+;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
+;   <label-mode> (default)
+format = <label-state> <label-mode>
+
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-foreground = #000000
+label-mode-background = #FFBB00
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+; focused = Active workspace on focused monitor
+label-focused = %icon% %name%
+label-focused-background = ${colors.background}
+label-focused-foreground = ${colors.foreground}
+label-focused-underline = #6790eb
+label-focused-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %icon% %name%
+label-unfocused-padding = 2
+label-unfocused-background = ${colors.background}
+label-unfocused-foreground = ${colors.foreground}
+label-unfocused-underline = #FFBB00
+
+; visible = Active workspace on unfocused monitor
+label-visible = %icon% %name%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = 2
+
+; empty = Workspace without windows
+label-empty = %icon% %name%
+label-empty-padding = 2
+label-empty-background = ${colors.background}
+label-empty-foreground = ${colors.foreground}
+label-empty-underline =
 
 ; Available tokens:
 ;   %name%
@@ -2816,7 +2947,7 @@ type = internal/xwindow
 ;   %title%
 ; Default: %title%
 label = %title%
-label-maxlen = 65
+label-maxlen = 28
 
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
@@ -2827,40 +2958,46 @@ format-background = ${colors.background}
 [module/xworkspaces]
 type = internal/xworkspaces
 
-pin-workspaces = false
+pin-workspaces = true
 enable-click = true
 enable-scroll = true
 reverse-scroll = true
 
 
-icon-0 = 1;
-icon-1 = 2;
-icon-2 = 3;
-icon-3 = 4;
-icon-4 = 5;
-#icon-5 = 6;
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+icon-8 = 9;
+icon-9 = 10;
+icon-default = " ";
 format = <label-state>
 label-monitor = %name%
 
-label-active = %index%
+label-active = %icon% %name%
 label-active-foreground = ${colors.active}
 label-active-background = ${colors.background}
 label-active-underline= #6790eb
 label-active-padding = 2
 
-label-occupied = %index%
+label-occupied = %icon% %name%
 label-occupied-foreground = ${colors.foreground}
 label-occupied-background = ${colors.background}
 label-occupied-padding = 2
 
-label-urgent = %index%
-label-urgent-foreground = ${colors.foreground}
+label-urgent = %icon% %name% %nwin%
+;label-urgent-foreground = ${colors.foreground}
+label-urgent-foreground = ${colors.alert}
 label-urgent-background = ${colors.alert}
 label-urgent-underline = ${colors.alert}
 label-urgent-padding = 2
 
 
-label-empty = %index%
+label-empty = %icon% %name%
 label-empty-foreground = ${colors.foreground}
 label-empty-padding = 2
 format-foreground = ${colors.foreground}
@@ -2871,7 +3008,7 @@ format-background = ${colors.background}
 [module/capsnumlock]
 type = custom/script
 exec = ~/.config/polybar/scripts/query-caps-num-lock.sh
-interval = 0.5
+interval = 0.3
 
 label-font = 3
 
@@ -2883,6 +3020,23 @@ format-prefix-underline = #FFFF00
 ;format-underline = #62FF00
 format-prefix-foreground = #FFFF00
 ;format-underline = #FFFF00
+
+###############################################################################
+
+[module/capsnumlock-ipc]
+type = custom/ipc
+
+hook-0 = ~/.config/polybar/scripts/query-caps-num-lock.sh
+
+initial = 1
+
+label-font = 3
+
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+format-prefix = "   "
+format-prefix-underline = #FFFF00
+format-prefix-foreground = #FFFF00
 
 ###############################################################################
 
@@ -2951,6 +3105,26 @@ format-underline = #40ad4b
 
 ###############################################################################
 
+[module/mic-ipc]
+type = custom/ipc
+
+hook-0 = ~/.config/polybar/scripts/mic-ipc.sh 
+hook-1 = ~/.config/polybar/scripts/mic-ipc.sh toggle
+
+label-font = 3
+;label = %{O6}%output%%{O9}
+
+format-foreground = #40ad4b
+format-background = ${colors.background}
+format-underline = #40ad4b
+
+initial = 1
+
+click-left = "#mic-ipc.hook.1"
+click-right = "#mic-ipc.hook.0"
+
+###############################################################################
+
 [module/vpn]
 type = custom/script
 
@@ -2958,10 +3132,34 @@ exec = ~/.config/polybar/scripts/vpn.sh
 
 interval = 2
 
-format-prefix = "   "
+;format-prefix = "   "
+;format-prefix = " 󰗹  "
 format-prefix-foreground = #d08770
-format-foreground = ${colors.foreground}
+;format-foreground = ${colors.foreground}
+format-foreground = #d08770
 format-background = ${colors.background}
 format-underline = #d08770
 
 label = %output%%{O3}
+
+###############################################################################
+
+[module/i3-workspace]
+type = custom/ipc
+
+hook-0 = ~/.config/polybar/scripts/i3-workspaces-stable module
+
+initial = 1
+
+label = %output%
+
+###############################################################################
+
+[module/i3-workspace-test]
+type = custom/ipc
+
+hook-0 = ~/Programas/C++/i3-workspaces/build/i3-workspaces module
+
+initial = 1
+
+label = %output%

@@ -91,6 +91,63 @@ workspace 8 output $secondMonitor
 workspace 9 output $secondMonitor
 workspace 10 output $secondMonitor
 
+bindsym KP_Add mode "super"
+
+mode "super" {
+    bindsym t exec --no-startup-id kitty
+
+    # switch to workspace
+    bindsym 1 workspace 1; mode "default"
+    bindsym 2 workspace 2; mode "default"
+    bindsym 3 workspace 3; mode "default"
+    bindsym 4 workspace 4; mode "default"
+    bindsym 5 workspace 5; mode "default"
+    bindsym 6 workspace 6; mode "default"
+    bindsym 7 workspace 7; mode "default"
+    bindsym 8 workspace 8; mode "default"
+    bindsym 9 workspace 9; mode "default"
+    bindsym 0 workspace 10; mode "default"
+
+    # move focused container to workspace
+    bindsym Shift+1 move container to workspace 1
+    bindsym Shift+2 move container to workspace 2
+    bindsym Shift+3 move container to workspace 3
+    bindsym Shift+4 move container to workspace 4
+    bindsym Shift+5 move container to workspace 5
+    bindsym Shift+6 move container to workspace 6
+    bindsym Shift+7 move container to workspace 7
+    bindsym Shift+8 move container to workspace 8
+    bindsym Shift+9 move container to workspace 9
+    bindsym Shift+0 move container to workspace 10
+
+    # change focus
+    bindsym $left focus left
+    bindsym $down focus down
+    bindsym $up focus up
+    bindsym $right focus right
+
+    # alternatively, you can use the cursor keys:
+    bindsym Left focus left
+    bindsym Down focus down
+    bindsym Up focus up
+    bindsym Right focus right
+
+    # move focused window
+    bindsym Shift+$left move left
+    bindsym Shift+$down move down
+    bindsym Shift+$up move up
+    bindsym Shift+$right move right
+
+    # alternatively, you can use the cursor keys:
+    bindsym Shift+Left move left
+    bindsym Shift+Down move down
+    bindsym Shift+Up move up
+    bindsym Shift+Right move right
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -371,9 +428,6 @@ font pango:Noto Mono Regular 13
 
 exec --no-startup-id unclutter
 exec --no-startup-id ~/.config/i3/scripts/dis-connected-mouse.bash &
-exec --no-startup-id ~/.config/i3/scripts/mic-ipc-updater.sh 3 &
-exec --no-startup-id ~/.config/polybar/scripts/i3-workspaces-stable sniffer &
-exec --no-startup-id ~/.config/polybar/scripts/caps-monitor.sh &
 exec --no-startup-id xss-lock lockscreen &
 
 # Browser
@@ -536,12 +590,10 @@ bindsym shift+$alt+c exec --no-startup-id thunderbird
 
 ################# screenshots                      
 
-#bindsym Print exec --no-startup-id scrot 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
+bindsym Print exec --no-startup-id scrot 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
 bindsym Control+Print exec --no-startup-id xfce4-screenshooter
-for_window [class="Xfce4-screenshooter"] focus
-#bindsym Control+Shift+Print exec --no-startup-id gnome-screenshot -i
-bindsym Print exec --no-startup-id flameshot gui
-#bindsym $mod+Control+Print exec --no-startup-id flameshot gui
+bindsym Control+Shift+Print exec --no-startup-id gnome-screenshot -i
+bindsym $mod+Control+Print exec --no-startup-id flameshot gui
 # bindsym shift+Print exec --no-startup-id shutter
 
 ################# floating or tiled rules         
@@ -641,7 +693,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "pulsemixer --change-volume -5
 bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle"
 #bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle; notify-send $(amixer -D pulse contents Master | grep -EA2 \\"Master.*Switch\\" | grep -Eo \\"values=(on|off)\\" | awk -v FS='=' '{if ($2 == \\"on\\") {print \\"Audio activado\\"} else {print \\"Audio desactivado\\"}}') -r 1"
 #bindsym Shift+XF86AudioMute exec --no-startup-id "amixer -D pulse set Capture toggle; notify-send $(amixer -D pulse contents Master | grep -EA2 \\"Capture.*Switch\\" | grep -Eo \\"values=(on|off)\\" | awk -v FS='=' '{if ($2 == \\"on\\") {print \\"Micro activado\\"} else {print \\"Micro desactivado\\"}}') -r 1"
-bindsym Shift+XF86AudioMute exec --no-startup-id "amixer -D pulse set Capture toggle; polybar-msg action mic-ipc hook 0"
+bindsym Shift+XF86AudioMute exec --no-startup-id "amixer -D pulse set Capture toggle"
 # https://github.com/acrisci/playerctl/
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next

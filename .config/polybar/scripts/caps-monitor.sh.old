@@ -1,0 +1,27 @@
+#!/usr/bin/bash
+
+appears=0
+
+caps_code=66
+num_code=77
+touchpad_code=199
+
+xinput test-xi2 --root |
+    while read line; do
+        if test "$(echo $line | awk '{if (match($0, /RawKeyPress/)) {print "true"} else {print "false"}}')" = "true"; then
+            appears=1
+        elif test $appears -gt 0; then
+            if test $appears -eq 3; then
+                code=$(echo $line | awk '{print $2}')
+                if test "$code" = "$caps_code" -o \
+                        "$code" = "$num_code" -o \
+                        "$code" = "$touchpad_code"; then
+                    sleep 0.1
+                    polybar-msg action capsnumlock-ipc hook 0
+                fi
+                appears=0
+            else
+                appears=$(($appears+1))
+            fi
+        fi
+    done

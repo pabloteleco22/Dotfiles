@@ -11,7 +11,8 @@ tempCore=($rawData)
 degree="°C"
 temperaturesValues=(40 50 60 70 80 90)
 temperaturesColors=("#6bff49" "#f4cb24" "#ff8819" "#ff3205" "#f40202" "#ef02db")
-temperaturesIcons=(     )
+#temperaturesIcons=(     )
+temperaturesIcons=(      )
 
 for iCore in ${!tempCore[*]}
 do

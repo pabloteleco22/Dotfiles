@@ -1,3 +1,0 @@
-function lsl --wraps='lsd --color=always --icon=always' --wraps='lsd --color=always --icon=always | less -r' --wraps='lsd --color=always --icon=always $argv| less -r' --wraps='lsd --color=always --icon=always $argv | less -r' --wraps='echo $argv; lsd --color=always --icon=always $argv | less -r' --wraps='lsd --config-file=~/.config/lsd/lsd.conf --color=always --icon=always $argv | less -r' --wraps='lsd --config-file ~/.config/lsd/lsd.conf --color=always --icon=always $argv | less -r' --description 'lsd --config-file ~/.config/lsd/lsd.conf --color=always --icon=always $argv | less -r'
-lsd --config-file ~/.config/lsd/lsd.conf --color=always --icon=always $argv | less -r
-end

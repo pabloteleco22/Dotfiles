@@ -1722,6 +1722,27 @@ click-right = "#mic-ipc.hook.0"
 
 ###############################################################################
 
+[module/worked-ipc]
+type = custom/ipc
+
+hook-0 = ~/.config/polybar/scripts/worked.py 
+hook-1 = ~/.config/polybar/scripts/worked.py new-entry
+hook-2 = ~/.config/polybar/scripts/worked-loop.sh
+
+label-font = 3
+;label = %{O6}%output%%{O9}
+
+;format-foreground = #40ad4b
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+;format-underline = #40ad4b
+
+initial = 3
+
+click-left = "#worked-ipc.hook.1"
+
+###############################################################################
+
 [module/vpn]
 type = custom/script
 

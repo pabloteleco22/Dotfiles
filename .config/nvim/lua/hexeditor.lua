@@ -4,7 +4,9 @@ local fn  = vim.fn
 local cmd = vim.cmd
 
 local Hex = {
-    last_ft = {},
+    last_ftype = {},
+    last_fenc = {},
+    last_eol = {},
     binary_view = {},
     hex_view = {},
     COMMAND = [[xxd -u -g1 ]]
@@ -18,8 +20,12 @@ function Hex.enter_hex(bufnr, cols)
     bufnr = bufnr or api.nvim_get_current_buf()
     Hex.binary_view[bufnr] = fn.winsaveview()
     bo[bufnr].binary = true
-    Hex.last_ft[bufnr] = bo[bufnr].filetype
+    Hex.last_ftype[bufnr] = bo[bufnr].filetype
+    Hex.last_fenc[bufnr] = bo[bufnr].fileencoding
+    Hex.last_eol[bufnr] = bo[bufnr].eol
     bo[bufnr].filetype = "xxd"
+    bo[bufnr].fileencoding = "latin1"
+    bo[bufnr].eol = false
     cmd([[silent %!]] .. Hex.COMMAND .. [[ -c]] .. cols)
     bo[bufnr].modified = false
     cmd('redraw')
@@ -68,7 +74,9 @@ function Hex.leave_hex(bufnr, cols)
     Hex.hex_view[bufnr] = fn.winsaveview()
     bo[bufnr].binary = false
     cmd([[silent %!]] .. Hex.COMMAND .. [[ -r -c]] .. cols)
-    bo[bufnr].filetype = Hex.last_ft[bufnr]
+    bo[bufnr].filetype = Hex.last_ftype[bufnr]
+    bo[bufnr].fileencoding = Hex.last_fenc[bufnr]
+    bo[bufnr].eol = Hex.last_eol[bufnr]
     bo[bufnr].modified = false
     cmd('redraw')
 
@@ -99,5 +107,7 @@ function Hex.ToggleHex(opts)
         vim.notify("Bin -> Hex", vim.log.levels.INFO)
     end
 end
+
+api.nvim_create_user_command("HexToggle", Hex.ToggleHex, { nargs = '*' })
 
 api.nvim_create_user_command("HexToggle", Hex.ToggleHex, { nargs = '*' })

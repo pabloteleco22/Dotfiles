@@ -10,6 +10,7 @@ set shiftwidth=4
 set expandtab
 set termguicolors
 set ignorecase
+set nowrap
 
 " Coc options
 set nobackup
@@ -82,6 +83,12 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Theme Kanagawa
 Plug 'rebelot/kanagawa.nvim'
+
+" Syntax highlighting for C and C++
+Plug 'bfrg/vim-c-cpp-modern'
+
+" Tree sitter
+"Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main', 'do': ':TSUpdate' }
 
 call plug#end()
 

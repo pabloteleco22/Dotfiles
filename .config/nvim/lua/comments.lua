@@ -41,7 +41,7 @@ vim.api.nvim_create_user_command('CommentSyntaxAdd',
                     local function toggle_comment()
                         local previous_search_pattern = vim.fn.getreg('/')
 
-                        local pattern = vim.regex("^" .. comment_str)
+                        local pattern = vim.regex("^[[:blank:]]*" .. comment_str)
                         local line = vim.api.nvim_get_current_line()
 
                         local start_pos = vim.fn.getpos(".")
@@ -57,7 +57,7 @@ vim.api.nvim_create_user_command('CommentSyntaxAdd',
                         for lnum = start_line, end_line do
                             if pattern:match_str(line) then
                                 pcall(function()
-                                    vim.cmd(lnum .. "s/^" .. comment_str .. "//")
+                                    vim.cmd(lnum .. "s/^[[:blank:]]*" .. comment_str .. "//")
                                 end)
                             else
                                 pcall(function()
@@ -71,7 +71,6 @@ vim.api.nvim_create_user_command('CommentSyntaxAdd',
 
                     vim.keymap.set(
                         'n',
---                         '<leader>/',
                         CommentSyntaxMappingStr ~= nil and CommentSyntaxMappingStr or default_syntax_mapping_str,
                         toggle_comment,
                         { buffer = 0 }

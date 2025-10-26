@@ -1,6 +1,8 @@
 add_newline = false
 command_timeout = 2000
 
+format = '$all$battery$shell$status$character'
+
 [jobs]
 format = "[$symbol( $number) ]($style) "
 
@@ -83,3 +85,7 @@ disabled = false
 fish_indicator = "󰈺 "
 bash_indicator = ""
 #zsh_indicator = " "
+
+[status]
+disabled = false
+symbol = ''

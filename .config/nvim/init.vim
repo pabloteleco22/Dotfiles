@@ -25,7 +25,8 @@ noremap <C-Backspace> db
 inoremap <C-Backspace> <C-W>
 noremap <C-Delete> dw
 inoremap <C-Delete> <ESC>cw
-noremap <silent> <C-a> :<C-u>Neotree toggle<CR>
+noremap <silent> <C-a> :<C-u>Neotree toggle reveal<CR>
+inoremap <silent> <C-a> <ESC>:<C-u>Neotree toggle reveal<CR>a
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
 nnoremap <leader>x "_x
@@ -156,4 +157,11 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 
+" Format on save
+autocmd BufWritePre * lua pcall(vim.fn.CocAction, 'format')
+
 colorscheme kanagawa
+
+lua << EOF
+require("neotree-conf")
+EOF

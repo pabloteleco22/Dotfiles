@@ -11,6 +11,8 @@ set expandtab
 set termguicolors
 set ignorecase
 set nowrap
+set foldmethod=syntax
+set foldlevelstart=99999
 
 " Coc options
 set nobackup

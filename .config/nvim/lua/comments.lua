@@ -21,6 +21,16 @@ vim.api.nvim_create_user_command('CommentSyntaxMapping',
     { nargs = 1 }
 )
 
+local function remove_comment(lnum, pattern_str)
+    pcall(function()
+        vim.cmd(lnum .. "s/" .. pattern_str .. "//")
+    end)
+end
+
+local function add_comment(lnum, comment_str)
+    vim.api.nvim_buf_set_text(0, lnum - 1, 0, lnum - 1, 0, { comment_str .. ' ' })
+end
+
 vim.api.nvim_create_user_command('CommentSyntaxAdd',
     function(opts)
         if #opts.fargs ~= 2 then
@@ -28,7 +38,7 @@ vim.api.nvim_create_user_command('CommentSyntaxAdd',
             return
         end
         local file_ext = "*" .. opts.fargs[1]
-        local comment_str = opts.fargs[2]:gsub('/', '\\/') .. " "
+        local comment_str = opts.fargs[2]
         local default_syntax_mapping_str = '<leader>/'
         local group = vim.api.nvim_create_augroup('CommentSyntaxGroup_' .. file_ext, { clear = true })
 
@@ -41,7 +51,8 @@ vim.api.nvim_create_user_command('CommentSyntaxAdd',
                     local function toggle_comment()
                         local previous_search_pattern = vim.fn.getreg('/')
 
-                        local pattern = vim.regex("^[[:blank:]]*" .. comment_str)
+                        local pattern_str = "^[[:blank:]]*" .. comment_str:gsub('/', '\\/') .. [[ \?]]
+                        local pattern = vim.regex(pattern_str)
                         local line = vim.api.nvim_get_current_line()
 
                         local start_pos = vim.fn.getpos(".")
@@ -51,18 +62,19 @@ vim.api.nvim_create_user_command('CommentSyntaxAdd',
                         local end_line = end_pos[2]
 
                         if start_line > end_line then
-                          start_line, end_line = end_line, start_line
+                            start_line, end_line = end_line, start_line
+                        end
+
+                        local action = "add"
+                        if pattern:match_str(line) then
+                            action = "remove"
                         end
 
                         for lnum = start_line, end_line do
-                            if pattern:match_str(line) then
-                                pcall(function()
-                                    vim.cmd(lnum .. "s/^[[:blank:]]*" .. comment_str .. "//")
-                                end)
-                            else
-                                pcall(function()
-                                    vim.cmd(lnum .. "s/^/" .. comment_str .. "/")
-                                end)
+                            if action == "remove" then
+                                remove_comment(lnum, pattern_str);
+                            elseif action == "add" then
+                                add_comment(lnum, comment_str);
                             end
                         end
                         vim.fn.setreg('/', previous_search_pattern)

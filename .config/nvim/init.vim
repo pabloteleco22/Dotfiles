@@ -23,7 +23,7 @@ set signcolumn=yes
 " noremap k gk
 " noremap l <space>
 " noremap h <backspace>
-noremap <C-Backspace> db
+noremap <silent> <C-Backspace> <Plug>AirlineSelectPrevTab :<C-u>keepalt bd #<CR>:AirlineRefresh<CR>
 inoremap <C-Backspace> <C-W>
 noremap <C-Delete> dw
 inoremap <C-Delete> <ESC>cw
@@ -161,6 +161,12 @@ let g:airline#extensions#tabline#buffer_idx_mode = 1
 
 " Format on save
 autocmd BufWritePre * lua pcall(vim.fn.CocAction, 'format')
+
+" Save view when leaving a buffer
+autocmd BufWinLeave * silent! mkview
+
+" Restore view when entering a buffer
+autocmd BufWinEnter * silent! loadview
 
 colorscheme kanagawa
 

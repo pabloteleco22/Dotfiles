@@ -109,5 +109,3 @@ function Hex.ToggleHex(opts)
 end
 
 api.nvim_create_user_command("HexToggle", Hex.ToggleHex, { nargs = '*' })
-
-api.nvim_create_user_command("HexToggle", Hex.ToggleHex, { nargs = '*' })

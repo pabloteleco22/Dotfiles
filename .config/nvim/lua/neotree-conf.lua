@@ -46,6 +46,6 @@ require("neo-tree").setup({
                     desc = "Open the node if is a directory, show it otherwise"
                 }
             }
-        }
+        },
     }
 })

@@ -1,10 +1,9 @@
+let mapleader=","
 set lbr
 set nu
 set relativenumber
 set hls
 set incsearch
-" set mouse=
-let mapleader = ","
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -13,31 +12,31 @@ set ignorecase
 set nowrap
 set foldmethod=syntax
 set foldlevelstart=99999
+set jumpoptions=view
 
 " Coc options
 set nobackup
 set nowritebackup
 set signcolumn=yes
 
-" noremap j gj
-" noremap k gk
-" noremap l <space>
-" noremap h <backspace>
 noremap <silent> <C-Backspace> <Plug>AirlineSelectPrevTab :<C-u>keepalt bd #<CR>:AirlineRefresh<CR>
 inoremap <C-Backspace> <C-W>
 noremap <C-Delete> dw
 inoremap <C-Delete> <ESC>cw
 noremap <silent> <C-a> :<C-u>Neotree toggle reveal<CR>
-inoremap <silent> <C-a> <ESC>:<C-u>Neotree toggle reveal<CR>a
+inoremap <silent> <C-a> <C-o>:<C-u>Neotree toggle reveal<CR>
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
 nnoremap <leader>x "_x
 vnoremap <leader>x "_x
+nnoremap , <Nop>
+nnoremap ,, ,
 
 lua << EOF
 require("comments")
-require("safe_paste")
+require("safe-paste")
 require("hexeditor")
+require("save-buffer-view")
 EOF
 
 vnoremap p <cmd>SafePaste<CR>
@@ -58,6 +57,8 @@ CommentSyntaxAdd .vim "
 CommentSyntaxAdd .lua --
 CommentSyntaxAdd Makefile #
 CommentSyntaxAdd makefile #
+CommentSyntaxAdd .tex %
+CommentSyntaxAdd .cls %
 
 call plug#begin()
 
@@ -78,9 +79,6 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
 Plug 'nvim-telescope/telescope-symbols.nvim'
 
-" LSP
-Plug 'neovim/nvim-lspconfig'
-
 " Coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -89,9 +87,6 @@ Plug 'rebelot/kanagawa.nvim'
 
 " Syntax highlighting for C and C++
 Plug 'bfrg/vim-c-cpp-modern'
-
-" Tree sitter
-"Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main', 'do': ':TSUpdate' }
 
 call plug#end()
 
@@ -162,11 +157,8 @@ let g:airline#extensions#tabline#buffer_idx_mode = 1
 " Format on save
 autocmd BufWritePre * lua pcall(vim.fn.CocAction, 'format')
 
-" Save view when leaving a buffer
-autocmd BufWinLeave * silent! mkview
-
-" Restore view when entering a buffer
-autocmd BufWinEnter * silent! loadview
+" Spell check on tex files
+autocmd FileType tex setlocal spell spelllang=es,en wrap
 
 colorscheme kanagawa
 

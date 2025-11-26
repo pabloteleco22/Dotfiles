@@ -32,6 +32,10 @@ require("neo-tree").setup({
                     desc = "Go to the top of the window"
                 },
                 ["I"] = "toggle_hidden",
+                ["<C-j>"] = { "scroll_preview", config = { direction = -10 } },
+                ["<C-k>"] = { "scroll_preview", config = { direction = 10 } },
+                ["<C-f>"] = false,
+                ["<C-b>"] = false,
                 ["z"] = false,
                 ["zz"] = {
                     center_window,

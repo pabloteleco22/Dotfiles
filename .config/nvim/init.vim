@@ -24,7 +24,7 @@ inoremap <C-Backspace> <C-W>
 noremap <C-Delete> dw
 inoremap <C-Delete> <ESC>cw
 noremap <silent> <C-a> :<C-u>Neotree toggle reveal<CR>
-inoremap <silent> <C-a> <C-o>:<C-u>Neotree toggle reveal<CR>
+inoremap <silent> <C-a> <C-o>:<C-u>Neotree close<CR>
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
 nnoremap <leader>x "_x
@@ -128,20 +128,21 @@ nmap <leader>rn <Plug>(coc-rename)
 " Use <c-space> to trigger completion
 inoremap <silent><expr> <c-space> coc#refresh()
 
-inoremap <expr> <Enter> coc#pum#visible() ? coc#pum#confirm() : "\<Enter>"
+inoremap <expr> <Enter> coc#pum#visible() ? coc#pum#stop() . "\<Enter>" : "\<Enter>"
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#confirm() : "\<Tab>"
 
-inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
-inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+inoremap <expr> <C-j> coc#pum#visible() ? coc#pum#next(1) : "\<C-j>"
+inoremap <expr> <C-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-k>"
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
 function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
+    if CocAction('hasProvider', 'hover')
+        call CocActionAsync('doHover')
+    else
+        call feedkeys('K', 'in')
+    endif
 endfunction
 
 nnoremap <silent> <leader>gf :<C-u>call CocActionAsync('format')<CR>
